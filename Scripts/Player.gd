@@ -6,8 +6,10 @@ var lives = 3
 var bombs = 3
 var speed = 5
 var score = 0
-var power = 0.00
+var power = 4.00
 var alpha = 0
+
+var canShoot = true
 
 onready var dot = get_node("Dot")
 
@@ -34,19 +36,89 @@ func _physics_process(delta):
 		power = 0.00
 		
 	# Shoot
-	if Input.is_action_pressed("shoot"):
+	if Input.is_action_pressed("shoot") and canShoot:
 		if power >= 0.00 and power < 1.00:
 			var bullet := plBullet.instance()
 			bullet.position = position
 			get_tree().current_scene.add_child_below_node(get_node("."), bullet)
 		elif power >= 1.00 and power < 2.00:
-			pass
+			var bullet := plBullet.instance()
+			var pos = position
+			pos.x += 20
+			bullet.position = pos
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet)
+			var bullet2 := plBullet.instance()
+			pos.x -= 40
+			bullet2.position = pos
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet2)
 		elif power >= 2.00 and power < 3.00:
-			pass
+			var bullet := plBullet.instance()
+			var pos = position
+			pos.x += 20
+			bullet.position = pos
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet)
+			var bullet2 := plBullet.instance()
+			pos.x -= 40
+			bullet2.position = pos
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet2)
+			var bullet3 := plBullet.instance()
+			var poz = position
+			poz.y -= 5
+			bullet3.position = poz
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet3)
 		elif power >= 3.00 and power < 4.00:
-			pass
+			var bullet := plBullet.instance()
+			var pos = position
+			pos.x += 20
+			bullet.position = pos
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet)
+			var bullet2 := plBullet.instance()
+			pos.x -= 40
+			bullet2.position = pos
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet2)
+			var bullet3 := plBullet.instance()
+			pos.x += 30
+			pos.y -= 5
+			bullet3.position = pos
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet3)
+			var bullet4 := plBullet.instance()
+			pos.x -= 20
+			bullet4.position = pos
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet4)
 		elif power >= 4.00:
-			pass
+			var bullet := plBullet.instance()
+			var pos = position
+			pos.x += 20
+			bullet.position = pos
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet)
+			var bullet2 := plBullet.instance()
+			pos.x -= 40
+			bullet2.position = pos
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet2)
+			var bullet3 := plBullet.instance()
+			pos.x += 30
+			pos.y -= 5
+			bullet3.position = pos
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet3)
+			var bullet4 := plBullet.instance()
+			pos.x -= 20
+			bullet4.position = pos
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet4)
+			var bullet5 := plBullet.instance()
+			pos.x += 10
+			pos.y -= 5
+			bullet5.position = pos
+			get_tree().current_scene.add_child_below_node(get_node("."), bullet5)
+		
+		canShoot = false
+		var t = Timer.new()
+		t.set_wait_time(0.25)
+		t.set_one_shot(true)
+		self.add_child(t)
+		t.start()
+		yield(t, "timeout")
+		canShoot = true
+		t.queue_free()
 			
 func get_input():
 	var input_dir = Vector2(0, 0)
