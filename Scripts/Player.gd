@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 var plBullet := preload("res://Scenes/Bullet.tscn")
+var plBomb := preload("res://Scenes/Bomb.tscn")
 
 var lives = 3
 var bombs = 3
@@ -119,7 +120,15 @@ func _physics_process(delta):
 		yield(t, "timeout")
 		canShoot = true
 		t.queue_free()
-			
+	
+	#Bomb
+	if Input.is_action_just_pressed("bomb"):
+		if bombs > 0:
+			bombs -= 1
+			var bomb := plBomb.instance()
+			bomb.position = position
+			get_tree().current_scene.add_child_below_node(get_node("."), bomb)
+	
 func get_input():
 	var input_dir = Vector2(0, 0)
 	var dir = Vector2(0, 0)

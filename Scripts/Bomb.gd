@@ -1,6 +1,6 @@
 extends Area2D
 
-export var speed: float = 500
+export var speed: float = 750
 
 func _ready():
 	# Delay destroy
@@ -16,7 +16,6 @@ func _ready():
 func _physics_process(delta):
 	position.y -= speed * delta
 
-func _on_Bullet_area_entered(area):
-	if area.name == "Meteor":
-		area.damage(1)
-		queue_free()
+func _on_Bomb_area_entered(area):
+	if area.name == "Meteor" or area.name == "Enemy":
+		area.damage(100)
