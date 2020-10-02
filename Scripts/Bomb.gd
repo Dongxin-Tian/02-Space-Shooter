@@ -1,6 +1,6 @@
 extends Area2D
 
-export var speed: float = 750
+export var speed: float = 300
 
 func _ready():
 	# Delay destroy

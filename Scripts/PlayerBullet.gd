@@ -22,5 +22,5 @@ func _physics_process(delta):
 
 func _on_Bullet_area_entered(area):
 	if "im_enemy" in area:
-		area.damage(1)
+		area.damage(2)
 		queue_free()

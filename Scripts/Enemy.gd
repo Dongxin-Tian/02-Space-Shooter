@@ -1,8 +1,11 @@
 extends Area2D
 
 var plEnemyBullet := preload("res://Scenes/EnemyBullet.tscn")
-var pattern: int = 1 # 1 - Aim | 2 - Square | 3 - Cross
+var plPower := preload("res://Scenes/PowerUp.tscn")
+var plBomb := preload("res://Scenes/BombUp.tscn")
+var plLife := preload("res://Scenes/LifeUp.tscn")
 
+var pattern: int = 1 # 1 - Aim | 2 - Square | 3 - Cross
 var life: int = 50
 var target: Vector2 = Vector2(0, 0)
 
@@ -13,6 +16,7 @@ var smoothed_velocity = Vector2()
 var im_enemy = true
 
 func _ready():
+	randomize()
 	pattern = int(rand_range(1, 4))
 	fire()
 
@@ -29,6 +33,23 @@ func damage(amount: int):
 	if life <= 0:
 		get_tree().current_scene.get_node("/root/GamePlay/Player").score += 1000
 		get_tree().current_scene.get_node("/root/GamePlay").enemyNumber -= 1
+		
+		var rand = int(rand_range(1, 11))
+		if rand == 1 or rand == 2 or rand == 3:
+			pass
+		elif rand == 4 or rand == 5 or rand == 6:
+			var power = plPower.instance()
+			get_tree().current_scene.add_child_below_node(get_node("/root/GamePlay/Player"), power)
+			power.position = position
+		elif rand == 7 or rand == 8 or rand == 9:
+			var power = plBomb.instance()
+			get_tree().current_scene.add_child_below_node(get_node("/root/GamePlay/Player"), power)
+			power.position = position
+		elif rand == 10:
+			var power = plLife.instance()
+			get_tree().current_scene.add_child_below_node(get_node("/root/GamePlay/Player"), power)
+			power.position = position	
+		
 		queue_free()
 
 func _on_Enemy_body_entered(body):

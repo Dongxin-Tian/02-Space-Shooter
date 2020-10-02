@@ -6,6 +6,7 @@ var plEnemy := preload("res://Scenes/Enemy.tscn")
 var enemyNumber = 0
 
 func _ready():
+	randomize()
 	SpawnMeteor()
 	SpawnEnemy()
 	

@@ -7,7 +7,7 @@ var lives = 3
 var bombs = 3
 var speed = 5
 var score = 0
-var power = 4.00
+var power = 1.5
 var alpha = 0
 
 var canShoot = true
@@ -151,6 +151,7 @@ func get_input():
 func die():
 	if canDie:
 		lives -= 1
+		power -= 1
 		if lives <= 0:
 			get_tree().change_scene("res://Scenes/GameOver.tscn")
 		position = Vector2(390, 530)
