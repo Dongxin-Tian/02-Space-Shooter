@@ -13,7 +13,9 @@ func _ready():
 
 func _physics_process(delta):
 	position.y += spd * delta
-	
+	if position.y >= 625:
+		queue_free()
+		
 func damage(amount: int):
 	life -= amount
 	if life <= 0:
