@@ -7,6 +7,7 @@ var enemyNumber = 0
 
 func _ready():
 	SpawnMeteor()
+	SpawnEnemy()
 	
 func SpawnMeteor():
 	var t = Timer.new()
@@ -25,18 +26,17 @@ func SpawnMeteor():
 	t.queue_free()
 	
 func SpawnEnemy():
-	if enemyNumber <= 3:
-		var t = Timer.new()
-		t.set_wait_time(3)
-		t.set_one_shot(true)
-		self.add_child(t)
-		t.start()
-		yield(t, "timeout")
-		
+	var t = Timer.new()
+	t.set_wait_time(3)
+	t.set_one_shot(true)
+	self.add_child(t)
+	t.start()
+	yield(t, "timeout")
+	if enemyNumber < 3:
 		var enemy := plEnemy.instance()
-		#var pos = Vector2(rand_range(), rand_range())
-		#enemy.position = pos
-		#get_tree.current_scene.add_child_below_node(get_node("Player"), enemy)
-		
-		SpawnEnemy()
-		t.queue_free()
+		var pos = Vector2(rand_range(210, 585), rand_range(40, 330))
+		enemy.target = pos
+		get_tree().current_scene.add_child_below_node(get_node("Player"), enemy)
+		enemyNumber += 1
+	SpawnEnemy()
+	t.queue_free()

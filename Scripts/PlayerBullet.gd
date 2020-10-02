@@ -13,10 +13,14 @@ func _ready():
 	queue_free()
 	t.queue_free()
 
+func _process(delta):
+	if position.y <= 1:
+		queue_free()
+
 func _physics_process(delta):
 	position.y -= speed * delta
 
 func _on_Bullet_area_entered(area):
-	if area.name == "Meteor":
+	if "im_enemy" in area:
 		area.damage(1)
 		queue_free()

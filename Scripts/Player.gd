@@ -11,6 +11,7 @@ var power = 4.00
 var alpha = 0
 
 var canShoot = true
+var canDie = true
 
 onready var dot = get_node("Dot")
 
@@ -146,3 +147,22 @@ func get_input():
 	else:
 		dir = input_dir
 	return dir.rotated(rotation)
+	
+func die():
+	if canDie:
+		lives -= 1
+		if lives <= 0:
+			get_tree().change_scene("res://Scenes/GameOver.tscn")
+		position = Vector2(390, 530)
+		canDie = false
+		var spr = get_node("Sprite")
+		spr.modulate = Color(1, 1, 1, 0.5)
+		var t = Timer.new()
+		t.set_wait_time(1)
+		t.set_one_shot(true)
+		self.add_child(t)
+		t.start()
+		yield(t, "timeout")
+		canDie = true
+		spr.modulate = Color(1, 1, 1, 1)
+		t.queue_free()

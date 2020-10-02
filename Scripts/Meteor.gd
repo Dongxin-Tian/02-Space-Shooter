@@ -3,6 +3,8 @@ extends Area2D
 var spd
 var life: int = 0
 
+var im_enemy = true
+
 func _ready():
 	spd = rand_range(50, 100)
 	var sca = rand_range(0.1, 0.3)
@@ -20,6 +22,6 @@ func damage(amount: int):
 
 func _on_Meteor_body_entered(body):
 	if body.get_name() == "Player":
-		body.lives -= 1
+		body.die()
 		queue_free()
 		
